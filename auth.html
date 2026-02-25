@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Вход | WiseKeys VPN</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-[#fdfdff] text-[#1e293b] font-['Montserrat'] antialiased min-h-screen relative overflow-x-hidden pb-20">
+  
+  <div class="fixed inset-0 -z-10 overflow-hidden blur-[100px] pointer-events-none opacity-20">
+    <div class="absolute -top-[100px] -right-[100px] w-[500px] h-[500px] rounded-full bg-[#0043CF]"></div>
+    <div class="absolute -bottom-[50px] -left-[100px] w-[400px] h-[400px] rounded-full bg-[#38bdf8]"></div>
+  </div>
+
+  <header class="w-full py-10 flex justify-center">
+    <a href="index.html">
+      <img src="logo.svg" alt="WiseKeys" class="w-40 md:w-56 cursor-pointer hover:scale-105 transition-transform">
+    </a>
+  </header>
+
+  <main class="container mx-auto px-6">
+    <section class="w-full max-w-md mx-auto pb-32">
+      <div class="glass p-8 rounded-[32px] mb-6">
+        <h2 class="text-2xl font-extrabold text-center mb-8 text-[#1e293b]">Вход в систему</h2>
+        <div class="space-y-6">
+          <div class="space-y-2">
+            <label class="text-[10px] font-bold text-[#64748b] uppercase tracking-widest ml-3">Email или Логин</label>
+            <input type="text" placeholder="Введите ваш email" class="w-full bg-white/50 border border-white/50 rounded-2xl p-4 outline-none focus:ring-2 focus:ring-[#0043CF]/20 transition-all">
+          </div>
+          <div class="space-y-2">
+            <label class="text-[10px] font-bold text-[#64748b] uppercase tracking-widest ml-3">Пароль</label>
+            <input type="password" placeholder="Ваш пароль" class="w-full bg-white/50 border border-white/50 rounded-2xl p-4 outline-none focus:ring-2 focus:ring-[#0043CF]/20 transition-all">
+          </div>
+          <a href="dashboard.html" class="w-full btn-primary rounded-2xl py-5 flex items-center justify-center no-underline">Продолжить</a>
+          <a href="dashboard.html" class="w-full bg-[#0088cc] text-white font-bold py-5 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20 hover:bg-[#0077b5] transition-all no-underline">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            <span>Вход через Telegram</span>
+          </a>
+        </div>
+        <p class="text-center text-xs text-[#64748b] mt-8 font-medium">
+          У вас нет аккаунта? <button class="text-[#0043CF] font-bold hover:underline">Создать</button>
+        </p>
+      </div>
+      <a href="index.html" class="w-full btn-secondary rounded-2xl py-5 flex items-center justify-center no-underline">Назад</a>
+    </section>
+  </main>
+</body>
+</html>
