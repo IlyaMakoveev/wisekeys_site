@@ -3,48 +3,493 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>WiseKeys VPN | Ваша свобода в сети</title>
+  <title>WiseKeys VPN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="/index.css">
-</head>
-<body class="bg-[#fdfdff] text-[#1e293b] font-['Montserrat'] antialiased min-h-screen relative overflow-x-hidden pb-20">
-  
-  <div class="fixed inset-0 -z-10 overflow-hidden blur-[100px] pointer-events-none opacity-20">
-    <div class="absolute -top-[100px] -right-[100px] w-[500px] h-[500px] rounded-full bg-[#0043CF]"></div>
-    <div class="absolute -bottom-[50px] -left-[100px] w-[400px] h-[400px] rounded-full bg-[#38bdf8]"></div>
-  </div>
+  <link rel="icon" type="image/svg+xml" href="./logo.svg">
+  <style>
+    :root {
+      --primary-blue: #0043CF;
+      --primary-blue-light: rgba(0, 67, 207, 0.1);
+      --accent-cyan: #38bdf8;
+      --telegram-blue: #0043CF; 
+      --danger-red: #ff4d4d;
+      --text-main: #1e293b;
+      --text-sub: #64748b;
+      --radius-lg: 32px;
+      --radius-md: 20px;
+      --radius-pill: 20px; /* Было 100px, теперь 20px для единообразия */
+      --glass-bg: rgba(255, 255, 255, 0.75);
+      --glass-border: rgba(255, 255, 255, 0.5);
+      --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+      --container-max-width: 1200px;
+      --nav-height: 80px;
+    }
 
-  <header class="w-full py-10 flex justify-center">
-    <a href="index.html">
-      <img src="logo.svg" alt="WiseKeys" class="w-40 md:w-56 cursor-pointer hover:scale-105 transition-transform">
-    </a>
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: #fdfdff;
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    .bg-blobs {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.15;
+    }
+    .blob-1 { width: 500px; height: 500px; background: var(--primary-blue); top: -100px; right: -100px; }
+    .blob-2 { width: 400px; height: 400px; background: var(--accent-cyan); bottom: -50px; left: -100px; }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max-width);
+      padding: 0 20px calc(var(--nav-height) + 60px + env(safe-area-inset-bottom)) 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    section { width: 100%; max-width: 500px; }
+
+    @media (min-width: 1024px) {
+      #view-dashboard, #view-landing {
+        max-width: 1100px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 32px;
+        align-items: start;
+      }
+      #view-dashboard > .card-full, #view-landing > .hero, #view-landing > #view-proxy, #view-error { grid-column: 1 / -1; }
+      #view-landing .hero, #view-landing #view-proxy, #view-error { 
+        text-align: center; max-width: 650px; margin-left: auto; margin-right: auto;
+      }
+    }
+
+    header { padding: 40px 0 20px 0; width: 100%; display: flex; justify-content: center; }
+    .logo-svg { width: clamp(160px, 35vw, 220px); height: auto; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; }
+    .logo-svg:hover { transform: scale(1.05); }
+
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-lg);
+      padding: clamp(24px, 5vw, 36px);
+      box-shadow: var(--glass-shadow);
+      margin-bottom: 24px;
+      width: 100%;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .hero { text-align: center; padding-bottom: 40px; }
+    .hero h1 { font-size: clamp(34px, 7vw, 56px); font-weight: 800; margin-bottom: 20px; line-height: 1.1; letter-spacing: -0.03em; color: #0f172a; }
+    .hero p { color: var(--text-sub); font-size: clamp(15px, 2.2vw, 17px); margin-bottom: 40px; line-height: 1.7; max-width: 620px; margin-left: auto; margin-right: auto; }
+
+    .btn-group-hero { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; width: 100%; }
+
+    .form-group { margin-bottom: 24px; text-align: left; }
+    .form-group label { display: block; font-size: 11px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-bottom: 10px; margin-left: 12px; letter-spacing: 0.05em; }
+    .form-input {
+      width: 100%; padding: 18px 22px; border-radius: var(--radius-md); border: 1px solid var(--glass-border);
+      background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(5px);
+      font-family: inherit; font-size: 15px; transition: all 0.3s;
+    }
+    .form-input:focus { border-color: var(--primary-blue); background: #ffffff; box-shadow: 0 0 0 5px var(--primary-blue-light); }
+
+    .label { color: var(--text-sub); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; text-align: left; width: 100%; display: block; padding-left: 4px; }
+    
+    .value-main { font-size: clamp(38px, 6vw, 56px); font-weight: 800; line-height: 1; color: #0f172a; }
+    .value-total { font-size: 18px; color: var(--text-sub); font-weight: 600; margin-left: 6px; }
+    
+    .progress-container { width: 100%; height: 12px; background: rgba(0, 0, 0, 0.05); border-radius: var(--radius-md); overflow: hidden; margin: 20px 0 28px 0; }
+    .progress-bar { height: 100%; width: 42.5%; background: linear-gradient(90deg, var(--primary-blue), var(--accent-cyan)); border-radius: var(--radius-md); box-shadow: 0 0 15px rgba(0, 67, 207, 0.2); }
+    
+    .status-card {
+      background: rgba(255, 255, 255, 0.4); border: 1px solid var(--glass-border); border-radius: 26px; padding: 18px; display: flex; gap: 18px; align-items: center; text-align: left;
+    }
+    .days-badge {
+      background: #fff; border-radius: 18px; width: 58px; height: 58px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04); flex-shrink: 0;
+    }
+    .days-badge .number { font-weight: 800; color: var(--primary-blue); font-size: 20px; line-height: 1; }
+    .days-badge .unit { font-size: 10px; font-weight: 700; color: var(--text-sub); text-transform: uppercase; margin-top: 3px; }
+
+    .badge { background: #d1fae5; border: 1px solid rgba(16, 185, 129, 0.2); padding: 5px 14px; border-radius: var(--radius-md); display: inline-flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+    .dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; box-shadow: 0 0 10px rgba(16, 185, 129, 0.5); }
+
+    .btn-primary {
+      flex: 1; min-width: 200px; background: var(--primary-blue); color: #fff; border: none; padding: 20px; border-radius: var(--radius-md);
+      font-family: inherit; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em;
+      cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1); display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 20px rgba(0, 67, 207, 0.2);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0, 67, 207, 0.3); background: #0037a8; }
+    .btn-primary:active { transform: translateY(-1px); }
+    
+    .btn-secondary { 
+      background: rgba(255, 255, 255, 0.6); color: var(--text-main); border: 1px solid var(--glass-border); backdrop-filter: blur(10px); box-shadow: var(--glass-shadow);
+    }
+    .btn-secondary:hover { background: #fff; border-color: var(--primary-blue); }
+
+    .btn-danger { 
+      background: rgba(255, 255, 255, 0.4); color: var(--danger-red); border: 1px solid rgba(239, 68, 68, 0.1); flex: none; width: 100%;
+    }
+    .btn-danger:hover { background: #fff1f2; border-color: #fecaca; }
+
+    .btn-pill {
+      width: 100%; background: var(--primary-blue); color: #fff; border: none; padding: 18px; border-radius: var(--radius-pill);
+      font-family: inherit; font-weight: 800; font-size: 15px; text-transform: uppercase; letter-spacing: 0.08em;
+      cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 25px rgba(0, 67, 207, 0.15);
+      text-decoration: none; display: flex; align-items: center; justify-content: center;
+    }
+    .btn-pill:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0, 67, 207, 0.25); background: #0037a8; }
+
+    /* Layout for Proxy and VLESS boxes */
+    .proxy-card {
+        text-align: left;
+        padding: 40px 32px;
+    }
+    .proxy-label {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-sub);
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: 12px;
+        display: block;
+    }
+    .proxy-desc {
+        font-size: 14px;
+        color: #94a3b8;
+        margin-bottom: 35px;
+        line-height: 1.5;
+        font-weight: 500;
+    }
+    .proxy-config-box { 
+      background: #f8fafc; 
+      border-radius: var(--radius-md); 
+      padding: 22px 24px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 14px; 
+      width: 100%; 
+      margin-bottom: 35px; 
+      transition: all 0.3s ease;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
+    }
+    .proxy-config-text { 
+      font-size: 13px; 
+      color: #64748b; 
+      white-space: nowrap; 
+      overflow: hidden; 
+      text-overflow: ellipsis; 
+      font-family: 'Courier New', Courier, monospace; 
+      font-weight: 700; 
+      flex-grow: 1;
+      text-align: left;
+    }
+    .copy-icon {
+        color: var(--primary-blue);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        transition: transform 0.2s;
+        flex-shrink: 0;
+    }
+    .copy-icon:hover { transform: scale(1.1); }
+    .copy-icon:active { transform: scale(0.9); }
+
+    /* New Support Section Styling (from Screenshot) */
+    .menu-item-v2 {
+      background: #f8fafc;
+      border-radius: 24px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      margin-bottom: 14px;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+      width: 100%;
+    }
+    .menu-item-v2:hover {
+      background: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 67, 207, 0.1);
+    }
+    .menu-icon-v2 {
+      width: 48px;
+      height: 48px;
+      background: #ffffff;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--primary-blue);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+    }
+    .menu-content-v2 {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex-grow: 1;
+    }
+    .menu-title-v2 {
+      font-weight: 700;
+      font-size: 16px;
+      color: #0f172a;
+      margin: 0;
+    }
+    .menu-subtitle-v2 {
+      font-size: 11px;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 2px;
+    }
+    .menu-chevron-v2 {
+      color: #cbd5e1;
+      transition: color 0.3s;
+    }
+    .menu-item-v2:hover .menu-chevron-v2 {
+      color: var(--primary-blue);
+    }
+
+    /* Error View Styles */
+    #view-error { text-align: center; display: flex; flex-direction: column; align-items: center; padding-top: 40px; }
+    .error-title { color: var(--danger-red); font-weight: 800; font-size: 24px; text-transform: uppercase; letter-spacing: 0.1em; margin: 30px 0 15px 0; }
+    .error-subtext { color: var(--danger-red); opacity: 0.6; font-size: 13px; font-weight: 600; max-width: 280px; line-height: 1.6; margin-bottom: 40px; }
+    .spinner {
+      width: 80px; height: 80px; border: 6px solid rgba(0, 0, 0, 0.04); border-top: 6px solid var(--accent-cyan);
+      border-radius: 50%; animation: spin 1s linear infinite; margin: 20px 0;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    .nav-floating {
+      position: fixed; bottom: 0; left: 0; right: 0; width: 100%; padding: 24px 24px calc(24px + env(safe-area-inset-bottom)) 24px;
+      display: flex; justify-content: center; z-index: 9999; pointer-events: none;
+    }
+    .nav-bar {
+      pointer-events: auto; background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(25px) saturate(180%); -webkit-backdrop-filter: blur(25px) saturate(180%);
+      border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 8px; display: flex; gap: 8px; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12); width: 100%; max-width: 420px;
+    }
+    .nav-btn {
+      flex: 1; border: none; background: transparent; padding: 15px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; gap: 12px;
+      cursor: pointer; color: var(--text-sub); transition: all 0.4s;
+    }
+    .nav-btn.active { background: var(--primary-blue); color: #fff; box-shadow: 0 6px 15px rgba(0, 67, 207, 0.3); }
+    .nav-text { font-family: inherit; font-weight: 700; font-size: 14px; }
+
+    .toast {
+      position: fixed; bottom: 120px; left: 50%; transform: translateX(-50%);
+      background: rgba(30, 41, 59, 0.9); backdrop-filter: blur(10px); color: #fff; padding: 14px 28px; border-radius: var(--radius-md);
+      font-weight: 700; font-size: 14px; z-index: 10000; opacity: 0; visibility: hidden; transition: all 0.4s;
+    }
+    .toast.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(-10px); }
+
+    .hidden { display: none !important; }
+    .view-animation { animation: fadeIn 0.5s cubic-bezier(0.23, 1, 0.32, 1); width: 100%; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    @media (max-width: 380px) { .nav-text { display: none; } }
+  </style>
+</head>
+<body>
+
+  <div class="bg-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+  
+  <header>
+    <svg class="logo-svg" viewBox="0 0 662 662" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="showView('view-landing')">
+      <path d="M163.776 194.74C189.8 184.62 252.004 281.509 257.776 287.24C318.777 347.816 348.276 354.74 348.276 354.74C348.276 354.74 308.776 357.24 196.776 279.24C192.524 276.518 180.776 277.74 191.276 310.74C212.776 357.74 260.621 453.009 287.621 454.509C296.597 455.007 305.67 456 315.121 445.509C332.621 421.009 362.121 354.74 368.621 342.009C397.211 286.009 428 282.267 436.121 281.509C465 278.811 491.493 287.009 506.121 303.009C522.121 320.509 541.121 361.009 510.621 402.509C475.621 443.509 411.621 456.009 361.121 432.509C459.621 435.065 464.121 413.509 473.621 397.509C479.262 388.009 483.5 363.609 470.621 350.509C441.621 321.009 417.121 331.61 411.621 335.009C391.253 347.593 386.121 358.009 359.121 403.509C333.121 452.509 312.577 466.048 297.621 468.009C277.265 470.677 246.544 458.971 234.776 450.24C159.776 407.74 140.621 310.74 138.621 303.009C131.766 276.509 137.752 204.861 163.776 194.74Z" fill="#0043CF"/>
+    </svg>
   </header>
 
-  <main class="container mx-auto px-6">
-    <section class="flex flex-col items-center justify-center min-h-[70vh]">
-      <div class="flex flex-col gap-4 mb-16">
-        <div class="flex gap-3">
-          <div class="letter-box">W</div>
-          <div class="letter-box">I</div>
-          <div class="letter-box">S</div>
-          <div class="letter-box">E</div>
-        </div>
-        <div class="flex gap-3 ml-12">
-          <div class="letter-box">K</div>
-          <div class="letter-box">E</div>
-          <div class="letter-box">Y</div>
-          <div class="letter-box">S</div>
+  <div class="container">
+    
+    <!-- View: Loading Error -->
+    <section id="view-error" class="view-animation hidden">
+      <div class="spinner"></div>
+      <div class="error-title">Сбой загрузки</div>
+      <div class="error-subtext">Ошибка сети: не удалось запросить данные.</div>
+      <button class="btn-primary" style="background: var(--accent-cyan); width: 280px; box-shadow: 0 8px 25px rgba(56, 189, 248, 0.25);" onclick="showView('view-landing')">
+        Повторить попытку
+      </button>
+    </section>
+
+    <!-- View 1: Landing -->
+    <section id="view-landing" class="view-animation">
+      <div class="hero">
+        <h1>WiseKeys VPN<br><span style="color: var(--primary-blue)">Твоя Свобода</span></h1>
+        <p>Кристально чистый интернет. Премиальная скорость, полная анонимность и доступ ко всем ресурсам в один клик.</p>
+        <div class="btn-group-hero">
+          <button class="btn-primary" onclick="showView('view-auth')">Подключить VPN</button>
+          <button class="btn-primary btn-secondary" onclick="scrollToId('view-proxy')">Телеграм Прокси</button>
         </div>
       </div>
-      <a href="auth.html" class="w-full max-w-sm py-5 bg-white border border-white/50 rounded-2xl text-[#0043CF] font-bold text-xl shadow-xl hover:shadow-2xl transition-all active:scale-95 flex items-center justify-center no-underline">
-        Подключить
-      </a>
+
+      <div id="view-proxy" class="card proxy-card">
+        <span class="proxy-label">Telegram Proxy</span>
+        <p class="proxy-desc">Используйте прокси для обхода блокировок без VPN.</p>
+        
+        <div class="proxy-config-box">
+          <span id="proxy-link" class="proxy-config-text">t.me/proxy?server=wisekeys.io&port=443&secret=...</span>
+          <div class="copy-icon" onclick="copyText('proxy-link')">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </div>
+        </div>
+        
+        <button class="btn-pill" onclick="window.open('https://t.me/proxy?server=1.1.1.1&port=443&secret=7gAAAAAAAAAAAAAAAAAAAABnb29nbGUuY29t')">
+          Подключить в Telegram
+        </button>
+      </div>
     </section>
-  </main>
-<script type="module" src="/index.tsx"></script>
+
+    <!-- View 2: Auth -->
+    <section id="view-auth" class="view-animation hidden" style="max-width: 450px;">
+      <div class="card">
+        <h2 style="font-size: 26px; font-weight: 800; text-align: center; margin-bottom: 35px; color: #0f172a;">Вход в систему</h2>
+        <div class="form-group">
+          <label>Email или Логин</label>
+          <input type="text" class="form-input" placeholder="Введите ваш email">
+        </div>
+        <div class="form-group">
+          <label>Пароль</label>
+          <input type="password" class="form-input" placeholder="Ваш пароль">
+        </div>
+        <button class="btn-primary" style="width: 100%; flex: none;" onclick="showView('view-dashboard')">Продолжить</button>
+        <button class="btn-pill" style="margin-top: 14px;" onclick="showView('view-dashboard')">
+          Вход через Telegram
+        </button>
+        <p style="text-align: center; font-size: 13px; margin-top: 25px; color: var(--text-sub); font-weight: 600;">У вас нет аккаунта? <a href="#" style="color: var(--primary-blue); font-weight: 800; text-decoration: none;">Создать</a></p>
+      </div>
+      <button class="btn-primary btn-secondary" style="width: 100%; flex: none;" onclick="showView('view-landing')">Назад</button>
+    </section>
+
+    <!-- View 3: Dashboard -->
+    <section id="view-dashboard" class="view-animation hidden">
+      <div class="card card-full">
+        <div class="badge" style="position: absolute; top: 20px; right: 24px; margin: 0; z-index: 10;">
+          <span class="dot"></span>
+          <span style="color: #10b981; font-size: 11px; font-weight: 800; text-transform: uppercase;">Активен</span>
+        </div>
+
+        <div style="margin-bottom: 30px; text-align: left;">
+          <h2 style="font-size: 22px; margin: 0; font-weight: 800;">Мой Кабинет</h2>
+        </div>
+
+        <div class="label">Остаток трафика</div>
+        <div style="display: flex; align-items: baseline; justify-content: flex-start; padding-left: 4px;">
+          <span class="value-main">57.5</span>
+          <span class="value-total">/ 100GB</span>
+        </div>
+        <div class="progress-container"><div class="progress-bar" style="width: 57.5%;"></div></div>
+
+        <div class="status-card">
+          <div class="days-badge"><span class="number">12</span><span class="unit">дней</span></div>
+          <div>
+            <div style="font-weight: 800; font-size: 16px; color: #0f172a;">Wise Premium</div>
+            <div style="font-size: 12px; color: var(--text-sub); font-weight: 600;">Продление: 31 дек 2024</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Support and Community Section -->
+      <div class="card" style="text-align: left;">
+        <span class="proxy-label" style="margin-bottom: 24px; padding-left: 4px;">Поддержка и сообщество</span>
+        
+        <a href="https://t.me/wisekeys_support" target="_blank" class="menu-item-v2">
+          <div class="menu-icon-v2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          </div>
+          <div class="menu-content-v2">
+            <h4 class="menu-title-v2">Чат поддержки</h4>
+            <span class="menu-subtitle-v2">Помощь и вопросы</span>
+          </div>
+          <div class="menu-chevron-v2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+        </a>
+
+        <a href="https://t.me/wisekeys_vpn" target="_blank" class="menu-item-v2">
+          <div class="menu-icon-v2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 11 18-5v12L3 13v-2Z"></path>
+              <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path>
+            </svg>
+          </div>
+          <div class="menu-content-v2">
+            <h4 class="menu-title-v2">Наш канал</h4>
+            <span class="menu-subtitle-v2">Новости и обновления</span>
+          </div>
+          <div class="menu-chevron-v2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"></path></svg>
+          </div>
+        </a>
+      </div>
+
+      <div class="card">
+        <div class="label">VLESS Ключ</div>
+        <div class="proxy-config-box" style="margin-bottom: 0;">
+          <span id="vless-link" class="proxy-config-text">vless://789-abc-def@server.wisekeys.io...</span>
+          <div class="copy-icon" onclick="copyText('vless-link')">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+        <button class="btn-pill">Продлить подписку</button>
+        <button class="btn-primary btn-danger" onclick="showView('view-auth')">Выход</button>
+      </div>
+    </section>
+  </div>
+
+  <nav class="nav-floating">
+    <div class="nav-bar">
+      <button class="nav-btn active" id="nav-home" onclick="showView('view-landing')">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span class="nav-text">Главная</span>
+      </button>
+      <button class="nav-btn" id="nav-profile" onclick="showView('view-dashboard')">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+        <span class="nav-text hidden">Кабинет</span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="toast" class="toast">Скопировано успешно!</div>
+
+  <script src="index.js"></script>
 </body>
 </html>
