@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>WiseKeys VPN</title>
+  <title>Вход | WiseKeys VPN</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="./logo.svg">
   <link rel="stylesheet" href="./style.css">
-<link rel="stylesheet" href="/index.css">
 </head>
 <body>
 
@@ -27,39 +26,32 @@
   </header>
 
   <div class="container">
-    <section id="view-landing" class="view-animation grid-layout">
-      <div class="hero grid-full">
-        <h1>WiseKeys VPN<br><span style="color: var(--primary-blue)">Твоя Свобода</span></h1>
-        <p>Кристально чистый интернет. Премиальная скорость, полная анонимность и доступ ко всем ресурсам в один клик.</p>
-        <div class="btn-group-hero">
-          <a href="./auth.html" class="btn-primary">Подключить VPN</a>
-          <button class="btn-primary btn-secondary" onclick="scrollToId('view-proxy')">Телеграм Прокси</button>
+    <section id="view-auth" class="view-animation" style="max-width: 450px;">
+      <div class="card">
+        <h2 style="font-size: 26px; font-weight: 800; text-align: center; margin-bottom: 35px; color: #0f172a;">Вход в систему</h2>
+        <div class="form-group">
+          <label>Email или Логин</label>
+          <input type="text" class="form-input" placeholder="Введите ваш email">
         </div>
-      </div>
-
-      <div id="view-proxy" class="card proxy-card grid-full">
-        <span class="proxy-label">Telegram Proxy</span>
-        <p class="proxy-desc">Используйте прокси для обхода блокировок без VPN.</p>
-        
-        <div class="proxy-config-box">
-          <span id="proxy-link" class="proxy-config-text">t.me/proxy?server=wisekeys.io&port=443&secret=...</span>
-          <div class="copy-icon" onclick="copyText('proxy-link')">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-          </div>
+        <div class="form-group">
+          <label>Пароль</label>
+          <input type="password" class="form-input" placeholder="Ваш пароль">
         </div>
-        
-        <button class="btn-pill" onclick="window.open('https://t.me/proxy?server=1.1.1.1&port=443&secret=7gAAAAAAAAAAAAAAAAAAAABnb29nbGUuY29t')">
-          Подключить в Telegram
-        </button>
+        <a href="./dashboard.html" class="btn-primary" style="width: 100%; flex: none;">Продолжить</a>
+        <a href="./dashboard.html" class="btn-pill" style="margin-top: 14px;">
+          Вход через Telegram
+        </a>
+        <p style="text-align: center; font-size: 13px; margin-top: 25px; color: var(--text-sub); font-weight: 600;">У вас нет аккаунта? <a href="#" style="color: var(--primary-blue); font-weight: 800; text-decoration: none;">Создать</a></p>
       </div>
+      <a href="./index.html" class="btn-primary btn-secondary" style="width: 100%; flex: none;">Назад</a>
     </section>
   </div>
 
   <nav class="nav-floating">
     <div class="nav-bar">
-      <a href="./index.html" class="nav-btn active" id="nav-home">
+      <a href="./index.html" class="nav-btn" id="nav-home">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-        <span class="nav-text">Главная</span>
+        <span class="nav-text hidden">Главная</span>
       </a>
       <a href="./dashboard.html" class="nav-btn" id="nav-profile">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -71,6 +63,5 @@
   <div id="toast" class="toast">Скопировано успешно!</div>
 
   <script src="./index.js"></script>
-<script type="module" src="/index.tsx"></script>
 </body>
 </html>
