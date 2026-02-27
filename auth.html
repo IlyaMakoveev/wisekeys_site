@@ -12,23 +12,23 @@
 </head>
 <body>
 
-  <div class="bg-blobs">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
+  <div class="bg-rings">
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+    <div class="ring ring-4"></div>
   </div>
   
-  <header>
-    <a href="./index.html">
-      <svg class="logo-svg" viewBox="0 0 662 662" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M163.776 194.74C189.8 184.62 252.004 281.509 257.776 287.24C318.777 347.816 348.276 354.74 348.276 354.74C348.276 354.74 308.776 357.24 196.776 279.24C192.524 276.518 180.776 277.74 191.276 310.74C212.776 357.74 260.621 453.009 287.621 454.509C296.597 455.007 305.67 456 315.121 445.509C332.621 421.009 362.121 354.74 368.621 342.009C397.211 286.009 428 282.267 436.121 281.509C465 278.811 491.493 287.009 506.121 303.009C522.121 320.509 541.121 361.009 510.621 402.509C475.621 443.509 411.621 456.009 361.121 432.509C459.621 435.065 464.121 413.509 473.621 397.509C479.262 388.009 483.5 363.609 470.621 350.509C441.621 321.009 417.121 331.61 411.621 335.009C391.253 347.593 386.121 358.009 359.121 403.509C333.121 452.509 312.577 466.048 297.621 468.009C277.265 470.677 246.544 458.971 234.776 450.24C159.776 407.74 140.621 310.74 138.621 303.009C131.766 276.509 137.752 204.861 163.776 194.74Z" fill="#0043CF"/>
-      </svg>
-    </a>
-  </header>
-
   <div class="container">
+    <div class="shield-container">
+      <svg class="shield-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+      </svg>
+    </div>
+
     <section id="view-auth" class="view-animation" style="max-width: 450px;">
       <div class="card">
-        <h2 style="font-size: 26px; font-weight: 800; text-align: center; margin-bottom: 35px; color: #0f172a;">Вход в систему</h2>
+        <h2 style="font-size: 26px; font-weight: 800; text-align: center; margin-bottom: 35px; color: #fff;">Вход в систему</h2>
         <div class="form-group">
           <label>Email или Логин</label>
           <input type="text" class="form-input" placeholder="Введите ваш email">
@@ -37,13 +37,13 @@
           <label>Пароль</label>
           <input type="password" class="form-input" placeholder="Ваш пароль">
         </div>
-        <a href="./dashboard.html" class="btn-primary" style="width: 100%; flex: none;">Продолжить</a>
-        <a href="./dashboard.html" class="btn-pill" style="margin-top: 14px;">
+        <a href="./dashboard.html" class="btn-blue" style="justify-content: center;">Продолжить</a>
+        <a href="./dashboard.html" class="btn-outline" style="justify-content: center; margin-top: 14px; border-color: rgba(255, 255, 255, 0.1);">
           Вход через Telegram
         </a>
         <p style="text-align: center; font-size: 13px; margin-top: 25px; color: var(--text-sub); font-weight: 600;">У вас нет аккаунта? <a href="#" style="color: var(--primary-blue); font-weight: 800; text-decoration: none;">Создать</a></p>
       </div>
-      <a href="./index.html" class="btn-primary btn-secondary" style="width: 100%; flex: none;">Назад</a>
+      <a href="./index.html" class="btn-small" style="justify-content: center; width: 100%;">Назад</a>
     </section>
   </div>
 

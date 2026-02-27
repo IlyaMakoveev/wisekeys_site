@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>WiseKeys VPN</title>
+  <title>WiseKeys VPN | Твоя Свобода</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -13,33 +13,37 @@
 </head>
 <body>
 
-  <div class="bg-blobs">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
+  <div class="bg-rings">
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+    <div class="ring ring-4"></div>
   </div>
   
-  <header>
-    <a href="./index.html">
-      <svg class="logo-svg" viewBox="0 0 662 662" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M163.776 194.74C189.8 184.62 252.004 281.509 257.776 287.24C318.777 347.816 348.276 354.74 348.276 354.74C348.276 354.74 308.776 357.24 196.776 279.24C192.524 276.518 180.776 277.74 191.276 310.74C212.776 357.74 260.621 453.009 287.621 454.509C296.597 455.007 305.67 456 315.121 445.509C332.621 421.009 362.121 354.74 368.621 342.009C397.211 286.009 428 282.267 436.121 281.509C465 278.811 491.493 287.009 506.121 303.009C522.121 320.509 541.121 361.009 510.621 402.509C475.621 443.509 411.621 456.009 361.121 432.509C459.621 435.065 464.121 413.509 473.621 397.509C479.262 388.009 483.5 363.609 470.621 350.509C441.621 321.009 417.121 331.61 411.621 335.009C391.253 347.593 386.121 358.009 359.121 403.509C333.121 452.509 312.577 466.048 297.621 468.009C277.265 470.677 246.544 458.971 234.776 450.24C159.776 407.74 140.621 310.74 138.621 303.009C131.766 276.509 137.752 204.861 163.776 194.74Z" fill="#0043CF"/>
-      </svg>
-    </a>
-  </header>
-
   <div class="container">
-    <section id="view-landing" class="view-animation grid-layout">
-      <div class="hero grid-full">
+    <div class="shield-container">
+      <svg class="shield-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+      </svg>
+    </div>
+
+    <section id="view-landing" class="view-animation">
+      <div class="hero">
         <h1>WiseKeys VPN<br><span style="color: var(--primary-blue)">Твоя Свобода</span></h1>
         <p>Кристально чистый интернет. Премиальная скорость, полная анонимность и доступ ко всем ресурсам в один клик.</p>
-        <div class="btn-group-hero">
-          <a href="./auth.html" class="btn-primary">Подключить VPN</a>
-          <button class="btn-primary btn-secondary" onclick="scrollToId('view-proxy')">Телеграм Прокси</button>
+        <div style="display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 320px; margin: 0 auto;">
+          <a href="./auth.html" class="btn-blue" style="justify-content: center;">Подключить VPN</a>
+          <button class="btn-outline" style="justify-content: center;" onclick="scrollToId('view-proxy')">Телеграм Прокси</button>
         </div>
       </div>
 
-      <div id="view-proxy" class="card proxy-card grid-full">
-        <span class="proxy-label">Telegram Proxy</span>
-        <p class="proxy-desc">Используйте прокси для обхода блокировок без VPN.</p>
+      <div id="view-proxy" class="card">
+        <div class="card-header" style="margin-bottom: 20px;">
+          <div>
+            <h3 class="brand-title" style="font-size: 24px;">Telegram Proxy</h3>
+            <div class="brand-status">Используйте прокси для обхода блокировок</div>
+          </div>
+        </div>
         
         <div class="proxy-config-box">
           <span id="proxy-link" class="proxy-config-text">t.me/proxy?server=wisekeys.io&port=443&secret=...</span>
@@ -48,7 +52,7 @@
           </div>
         </div>
         
-        <button class="btn-pill" onclick="window.open('https://t.me/proxy?server=1.1.1.1&port=443&secret=7gAAAAAAAAAAAAAAAAAAAABnb29nbGUuY29t')">
+        <button class="btn-blue" style="margin-bottom: 0;" onclick="window.open('https://t.me/proxy?server=1.1.1.1&port=443&secret=7gAAAAAAAAAAAAAAAAAAAABnb29nbGUuY29t')">
           Подключить в Telegram
         </button>
       </div>
